@@ -1,10 +1,13 @@
 package io.corp.calculator;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.junit.Assert;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +26,8 @@ class CalculatorApplicationTests {
 
 
 
-    @Test
-    public void additionTest() throws URISyntaxException{
+	@Test
+	void additionTest() throws URISyntaxException{
     	String operation = "addition";
     	
     	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
@@ -37,15 +40,20 @@ class CalculatorApplicationTests {
                 "&second=" + secondNumber + "&operation=" + operation;
     	
         URI uri = new URI(urlEndopint);
-    	
-        ResponseEntity<Double>  result = restTemplate.getForEntity(uri, Double.class);
-        Assert.assertEquals(200, result.getStatusCodeValue());
-        Assert.assertEquals(25.0d, result.getBody().doubleValue(), 0.001d);
+        
 
+        ResponseEntity<BigDecimal>  result = restTemplate.getForEntity(uri, BigDecimal.class);
+        
+        assertAll(
+                () -> assertEquals(200, result.getStatusCodeValue(), "validating http response"),
+                () -> assertEquals(25.0d, result.getBody().doubleValue(), "validating the result obtained")
+                );
+        
     }
+	
     
-    @Test
-    public void subtractionTest() throws URISyntaxException {
+	@Test
+	void subtractionTest() throws URISyntaxException {
 	String operation = "subtraction";
     	
     	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
@@ -59,14 +67,17 @@ class CalculatorApplicationTests {
     	
         URI uri = new URI(urlEndopint);
     	
-        ResponseEntity<Double>  result = restTemplate.getForEntity(uri, Double.class);
-        Assert.assertEquals(200, result.getStatusCodeValue());
-        Assert.assertEquals(20.0d, result.getBody().doubleValue(), 0.001d);
+        ResponseEntity<BigDecimal>  result = restTemplate.getForEntity(uri, BigDecimal.class);
+        
+        assertAll(
+                () -> assertEquals(200, result.getStatusCodeValue(), "validating http response"),
+                () -> assertEquals(20.0d, result.getBody().doubleValue(), "validating the result obtained")
+                );
 
     }
     
-    @Test
-    public void multiplicationTest() throws URISyntaxException {
+	@Test
+	void multiplicationTest() throws URISyntaxException {
 	String operation = "multiplication";
     	
     	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
@@ -80,14 +91,18 @@ class CalculatorApplicationTests {
     	
         URI uri = new URI(urlEndopint);
     	
-        ResponseEntity<Double>  result = restTemplate.getForEntity(uri, Double.class);
-        Assert.assertEquals(200, result.getStatusCodeValue());
-        Assert.assertEquals(40.0d, result.getBody().doubleValue(), 0.001d);
+        ResponseEntity<BigDecimal>  result = restTemplate.getForEntity(uri, BigDecimal.class);
+        
+        assertAll(
+                () -> assertEquals(200, result.getStatusCodeValue(), "validating http response"),
+                () -> assertEquals(40.0d, result.getBody().doubleValue(), "validating the result obtained")
+                );
+        
 
     }
     
-    @Test
-    public void divisionTest() throws URISyntaxException {
+	@Test
+	void divisionTest() throws URISyntaxException {
 	String operation = "division";
     	
     	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
@@ -101,9 +116,12 @@ class CalculatorApplicationTests {
     	
         URI uri = new URI(urlEndopint);
     	
-        ResponseEntity<Double>  result = restTemplate.getForEntity(uri, Double.class);
-        Assert.assertEquals(200, result.getStatusCodeValue());
-        Assert.assertEquals(10.0d, result.getBody().doubleValue(), 0.001d);
+        ResponseEntity<BigDecimal>  result = restTemplate.getForEntity(uri, BigDecimal.class);
+        
+        assertAll(
+                () -> assertEquals(200, result.getStatusCodeValue(), "validating http response"),
+                () -> assertEquals(10.0d, result.getBody().doubleValue(), "validating the result obtained")
+                );
 
     }
 
