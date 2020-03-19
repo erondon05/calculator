@@ -13,12 +13,5 @@ result 5 + 20 = 25
 
  `25`
 
-## JAVA8
-	/**
-	 * Expresión lambda  to Subtraction
-	 * @return double
-	 */
-	private Operation Subtraction() {
-		return (double  x, double  y) -> (x -y);
-	} 
+
 

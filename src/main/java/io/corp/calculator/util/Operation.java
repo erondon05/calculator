@@ -1,7 +1,7 @@
 package io.corp.calculator.util;
 
-
+import java.math.BigDecimal;
 
 public interface Operation {
-	double  calculate(double  numberOne, double  numberTwo);
+	BigDecimal  calculate(BigDecimal   numberOne, BigDecimal   numberTwo);
 }

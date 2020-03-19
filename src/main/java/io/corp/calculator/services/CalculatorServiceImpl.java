@@ -24,29 +24,29 @@ public class CalculatorServiceImpl implements CalculatorService {
 	
 
 	@Override
-	public double calculate(BigDecimal first, BigDecimal second, String operation) {
+	public BigDecimal calculate(BigDecimal first, BigDecimal second, String operation) {
 		Operation operacion = null;
-		double result = 0;
+		BigDecimal result = null;
 		try {
 			
 			   switch (operation) {
 	            case CalculatorConstants.ADDITION:
 	            	
 	            	 operacion = addition();
-	            	 return result =  operacion.calculate(first.doubleValue(), second.doubleValue());
+	            	 return result =  operacion.calculate(first, second);
 	              
 	            case CalculatorConstants.SUBTRACTION:
 	            	
 	            	 operacion = Subtraction();
-	            	 return result = operacion.calculate(first.doubleValue(), second.doubleValue());
+	            	 return result = operacion.calculate(first, second);
 	          
 	            case CalculatorConstants.MILTIPLICATION:
 	            	 operacion = multiply();
-	            	 return result = operacion.calculate(first.doubleValue(), second.doubleValue());
+	            	 return result = operacion.calculate(first, second);
 	                
 	            case CalculatorConstants.DIVISION:	            	
 	            	 operacion = division();
-	            	 return result = operacion.calculate(first.doubleValue(), second.doubleValue());
+	            	 return result = operacion.calculate(first, second);
 	               
 	            default:		            	
 	  			  tracer.trace(result);
@@ -72,7 +72,7 @@ public class CalculatorServiceImpl implements CalculatorService {
 	 * @return double
 	 */
 	private Operation addition() {
-		return (double  x, double  y) -> (x + y);
+		return (BigDecimal x, BigDecimal y) -> (x.add(y));
 	} 
 	
 	/**
@@ -80,7 +80,7 @@ public class CalculatorServiceImpl implements CalculatorService {
 	 * @return double
 	 */
 	private Operation Subtraction() {
-		return (double  x, double  y) -> (x -y);
+		return (BigDecimal  x, BigDecimal  y) -> (x.subtract(y));
 	} 
 
 	/**
@@ -88,7 +88,7 @@ public class CalculatorServiceImpl implements CalculatorService {
 	 * @return double
 	 */
 	private Operation multiply() {
-		return (double  x, double  y) -> (x *y);
+		return (BigDecimal  x, BigDecimal  y) -> (x.multiply(y));
 	} 
 	
 	/**
@@ -96,7 +96,7 @@ public class CalculatorServiceImpl implements CalculatorService {
 	 * @return double
 	 */
 	private Operation division() {
-		return (double  x, double  y) -> (x /y);
+		return (BigDecimal  x, BigDecimal  y) -> (x.divide(y));
 	} 
 
 

@@ -14,5 +14,5 @@ public interface CalculatorService {
 	 * @param operation operation  
 	 * @return double
 	 */
-	double calculate(BigDecimal first, BigDecimal second, String operation);
+	BigDecimal calculate(BigDecimal first, BigDecimal second, String operation);
 }

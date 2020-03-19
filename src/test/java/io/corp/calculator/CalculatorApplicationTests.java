@@ -1,5 +1,6 @@
 package io.corp.calculator;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -27,9 +28,10 @@ class CalculatorApplicationTests {
     	String operation = "addition";
     	
     	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+             
         
-        int firstNumber = 5;
-        int secondNumber = 20;
+        BigDecimal firstNumber = new BigDecimal("5");
+        BigDecimal secondNumber = new BigDecimal("20");
         
         String  urlEndopint = "http://localhost:" + port +  "/calculator/calculate?" + "first=" + firstNumber + 
                 "&second=" + secondNumber + "&operation=" + operation;
@@ -47,9 +49,10 @@ class CalculatorApplicationTests {
 	String operation = "subtraction";
     	
     	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+
         
-        int firstNumber = 30;
-        int secondNumber = 10;
+        BigDecimal firstNumber = new BigDecimal("30");
+        BigDecimal secondNumber = new BigDecimal("10");
         
         String  urlEndopint = "http://localhost:" + port +  "/calculator/calculate?" + "first=" + firstNumber + 
                 "&second=" + secondNumber + "&operation=" + operation;
@@ -67,9 +70,10 @@ class CalculatorApplicationTests {
 	String operation = "multiplication";
     	
     	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+ 
         
-        int firstNumber = 8;
-        int secondNumber = 5;
+        BigDecimal firstNumber = new BigDecimal("8");
+        BigDecimal secondNumber = new BigDecimal("5");
         
         String  urlEndopint = "http://localhost:" + port +  "/calculator/calculate?" + "first=" + firstNumber + 
                 "&second=" + secondNumber + "&operation=" + operation;
@@ -87,9 +91,10 @@ class CalculatorApplicationTests {
 	String operation = "division";
     	
     	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+
         
-        int firstNumber = 50;
-        int secondNumber = 5;
+        BigDecimal firstNumber = new BigDecimal("50");
+        BigDecimal secondNumber = new BigDecimal("5");
         
         String  urlEndopint = "http://localhost:" + port +  "/calculator/calculate?" + "first=" + firstNumber + 
                 "&second=" + secondNumber + "&operation=" + operation;

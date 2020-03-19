@@ -47,10 +47,10 @@ public class CalculatorController {
 	 * @return ResponseEntity
 	 */
 	@GetMapping(value = "/calculate")
-    public ResponseEntity<Double> calcula(@RequestParam(name = "first") BigDecimal first,
+    public ResponseEntity<BigDecimal> calcula(@RequestParam(name = "first") BigDecimal first,
             @RequestParam(name = "second") BigDecimal second,
             @RequestParam(name = "operation") String operation) {
-		double result = this.calculatorService.calculate(first, second, operation);
+		BigDecimal result = this.calculatorService.calculate(first, second, operation);
      
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
