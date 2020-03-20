@@ -24,7 +24,23 @@ public class CalculatorServiceUnitTest  {
 	    }
 
 	@Test
-	public void calculatorServiceTest() throws Exception {
+	public void additionTest() throws Exception {
+	
+		
+	     BigDecimal firstNumber = new BigDecimal("20");
+	     BigDecimal secondNumber = new BigDecimal("10");
+	     BigDecimal result = firstNumber.add(secondNumber);
+	     String operation = "addition";
+	     
+	        
+		Mockito.when(this.calculatorService.calculate(firstNumber, secondNumber, operation))
+		.thenReturn(result);		
+
+		assertEquals(30d, result.doubleValue(), "validating the result obtained");
+	}
+	
+	@Test
+	public void subtractionTest() throws Exception {
 	
 		
 	     BigDecimal firstNumber = new BigDecimal("10");
@@ -37,6 +53,39 @@ public class CalculatorServiceUnitTest  {
 		.thenReturn(result);		
 
 		assertEquals(5d, result.doubleValue(), "validating the result obtained");
+	}
+	
+	
+	@Test
+	public void multiplicationTest() throws Exception {
+	
+		
+	     BigDecimal firstNumber = new BigDecimal("9");
+	     BigDecimal secondNumber = new BigDecimal("3");
+	     BigDecimal result = firstNumber.multiply(secondNumber);
+	     String operation = "multiplication";
+	     
+	        
+		Mockito.when(this.calculatorService.calculate(firstNumber, secondNumber, operation))
+		.thenReturn(result);		
+
+		assertEquals(27d, result.doubleValue(), "validating the result obtained");
+	}
+	
+	@Test
+	public void divisionTest() throws Exception {
+	
+		
+	     BigDecimal firstNumber = new BigDecimal("40");
+	     BigDecimal secondNumber = new BigDecimal("10");
+	     BigDecimal result = firstNumber.divide(secondNumber);
+	     String operation = "division";
+	     
+	        
+		Mockito.when(this.calculatorService.calculate(firstNumber, secondNumber, operation))
+		.thenReturn(result);		
+
+		assertEquals(4d, result.doubleValue(), "validating the result obtained");
 	}
 	
 
