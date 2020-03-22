@@ -1,64 +1,70 @@
 package io.corp.calculator.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import java.math.BigDecimal;
-import java.net.URI;
-import java.net.URISyntaxException;
+
+
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-import io.corp.calculator.ApplicationConfig;
+import io.corp.calculator.services.CalculatorService;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ApplicationConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@WebMvcTest(value = CalculatorController.class)
 public class CalculatorControllerTest {
 	
-	
-	@LocalServerPort
-    int port;
 
 
 	
 	@MockBean
 	private CalculatorController calculatorController;
-	   
+	
+	 protected MockMvc mockMvc;
+	 
+	 @Autowired
+	 private WebApplicationContext webApplicationContext;
+
+		@MockBean
+		private CalculatorService calculatorService;
+	 
 	   @Before
 	    public void setUp() {
-		   calculatorController = Mockito.mock(CalculatorController.class);
+		   this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+		   calculatorService = Mockito.mock(CalculatorService.class);
 		   
 	    }
 	   
 	   @Test
-	   public void calculatorControllerTest() throws URISyntaxException {
-		   RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+	   public void calculatorControllerTest() throws Exception {
 			 BigDecimal firstNumber = new BigDecimal("12");
 		     BigDecimal secondNumber = new BigDecimal("7");
+		     BigDecimal result = firstNumber.add(secondNumber);
 		     String operation = "subtraction";
-		        String  urlEndopint = "http://localhost:" + port +  "/calculator/calculate?" + "first=" + firstNumber + 
+		        String  urlEndopint ="http://localhost:8080"  +"/calculator/calculate?" + "first=" + firstNumber + 
 		                "&second=" + secondNumber + "&operation=" + operation;
-		    	
-		        URI uri = new URI(urlEndopint);
-		    	
-		        ResponseEntity<BigDecimal>  result = restTemplate.getForEntity(uri, BigDecimal.class);
-		    
-			
-			Mockito.when(this.calculatorController.calcula(firstNumber, secondNumber, operation))
-			.thenReturn(result);
-			
-			assertEquals(200, result.getStatusCodeValue(), "validating the result obtained");
-			
+		        
+				Mockito.when(this.calculatorService.calculate(firstNumber, secondNumber, operation))
+				.thenReturn(result);
+
+				mockMvc.perform(get(urlEndopint))
+		                .andExpect(status().isOk());
+				
 		}
 
 }
