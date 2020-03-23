@@ -38,6 +38,13 @@ public class CalculatorController {
 	
 	@Autowired
     private CalculatorService calculatorService; 
+	
+    @Autowired
+    public CalculatorController(CalculatorService calculatorService) {
+        this.calculatorService = calculatorService;
+    }
+	
+
     
 	/**
 	 * 

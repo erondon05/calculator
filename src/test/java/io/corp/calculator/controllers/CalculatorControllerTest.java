@@ -5,35 +5,36 @@ package io.corp.calculator.controllers;
 import java.math.BigDecimal;
 
 
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import io.corp.calculator.services.CalculatorService;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = CalculatorController.class)
+@SpringBootTest(classes = CalculatorControllerTest.class)
 public class CalculatorControllerTest {
-	
 
-
-	
 	@MockBean
 	private CalculatorController calculatorController;
+	
+
 	
 	 protected MockMvc mockMvc;
 	 
@@ -45,8 +46,11 @@ public class CalculatorControllerTest {
 	 
 	   @Before
 	    public void setUp() {
-		   this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+		   mockMvc = MockMvcBuilders
+			        .webAppContextSetup(webApplicationContext)
+			        .build();
 		   calculatorService = Mockito.mock(CalculatorService.class);
+		   calculatorController = new CalculatorController(calculatorService);
 		   
 	    }
 	   
@@ -54,16 +58,24 @@ public class CalculatorControllerTest {
 	   public void calculatorControllerTest() throws Exception {
 			 BigDecimal firstNumber = new BigDecimal("12");
 		     BigDecimal secondNumber = new BigDecimal("7");
-		     BigDecimal result = firstNumber.add(secondNumber);
-		     String operation = "subtraction";
-		        String  urlEndopint ="http://localhost:8080"  +"/calculator/calculate?" + "first=" + firstNumber + 
-		                "&second=" + secondNumber + "&operation=" + operation;
+		     String operation = "addition";
 		        
-				Mockito.when(this.calculatorService.calculate(firstNumber, secondNumber, operation))
-				.thenReturn(result);
+		        LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+		        		requestParams.add("first", firstNumber.toString());
+		        		requestParams.add("second", secondNumber.toString());
+		        		requestParams.add("operation", operation);
 
-				mockMvc.perform(get(urlEndopint))
-		                .andExpect(status().isOk());
+
+						
+					    // when
+						ResultActions result = mockMvc.perform(
+				                get("/calculator/calculate")
+				                .params(requestParams));
+				        
+				   
+	
+				result.andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()));
+				
 				
 		}
 
