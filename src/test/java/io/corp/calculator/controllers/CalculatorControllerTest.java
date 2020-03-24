@@ -67,7 +67,7 @@ public class CalculatorControllerTest {
 
 
 						
-					    // when
+					   
 						ResultActions result = mockMvc.perform(
 				                get("/calculator/calculate")
 				                .params(requestParams));

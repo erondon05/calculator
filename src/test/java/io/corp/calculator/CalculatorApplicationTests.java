@@ -73,8 +73,7 @@ public class CalculatorApplicationTests {
 				Mockito.when(this.calculatorService.calculate(firstNumber, secondNumber, operation))
 				.thenReturn(resultp);
 				
-								
-				// when
+				
 				ResultActions result = mockMvc.perform(get("/calculator/calculate").params(requestParams));
 				        
 
@@ -105,7 +104,7 @@ public class CalculatorApplicationTests {
 				.thenReturn(resultp);
 				
 								
-				// when
+				
 				ResultActions result = mockMvc.perform(get("/calculator/calculate").params(requestParams));
 				        
 
@@ -136,7 +135,7 @@ public class CalculatorApplicationTests {
 				.thenReturn(resultp);
 				
 								
-				// when
+				
 				ResultActions result = mockMvc.perform(get("/calculator/calculate").params(requestParams));
 				        
 
@@ -167,7 +166,7 @@ public class CalculatorApplicationTests {
 				.thenReturn(resultp);
 				
 								
-				// when
+				
 				ResultActions result = mockMvc.perform(get("/calculator/calculate").params(requestParams));
 				        
 
